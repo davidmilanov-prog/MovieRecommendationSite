@@ -18,7 +18,19 @@ def generate_embeddings():
         print(f"Error: {INPUT_FILE} not found. Run preprocess_data.py first.")
         return
     
+    print(f"Loading cleaned dataset")
     df = pd.read_parquet(INPUT_FILE)
+
+    print(f"Loading pretrained model")
+    model = SentenceTransformer(MODEL_NAME)
+
+    print(f"Calculate embeddings")
+    embeddings = model.encode(df['content_for_embedding'].tolist(),
+                              show_progress_bar =True, 
+                              convert_to_numpy=True
+                              )
+    
+    print(f"done")
 
 # Download the LLM (it will happen automatically the first time you run it).
 
