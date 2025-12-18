@@ -1,3 +1,6 @@
 pandas 
+numpy
 pyarrow 
 fastparquet
+sentence_transformers
+faiss-cpu
