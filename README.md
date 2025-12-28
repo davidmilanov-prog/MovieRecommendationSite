@@ -1,4 +1,4 @@
-i want to create a website where you can select up to 3 movies that you like and it will return back movies similar to it with a % match available. i want to do this by mapping all movie summaries into a feature space using llama and then when you select movies it goes into the feature space and finds neighbors. frontend will be simple react. 
+Redoing this project with a hybrid approach where I embed the movies overview into a feature space so I can find 50-100 semantically similar movies to the movies that the user likes and then use a collaborative filtering model to predict which of the candidate movies the user would realistically like.
 
 Dataset used:
-https://www.kaggle.com/datasets/asaniczka/tmdb-movies-dataset-2023-930k-movies?resource=download
+https://www.kaggle.com/datasets/rounakbanik/the-movies-dataset 

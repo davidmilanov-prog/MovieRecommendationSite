@@ -24,19 +24,27 @@ def generate_embeddings():
     print(f"Loading pretrained model")
     model = SentenceTransformer(MODEL_NAME)
 
-    print(f"Calculate embeddings")
+    print(f"Calculating embeddings")
     embeddings = model.encode(df['content_for_embedding'].tolist(),
                               show_progress_bar =True, 
                               convert_to_numpy=True
                               )
+    # Convert into type float32 as FAISS is in c++ and requires it
+    embeddings = embeddings.astype('float32')
+
+    # Normalize so dot product operation becomes a cosine similarity calculation
+    print(f"Normalizing embeddings")
+    faiss.normalize_L2(embeddings)
+
+    # Creating the high dimensional vector space. Inner product finds movies similar to eachother
+    print(f"Creating vector space")
+    dimension = embeddings.shape[1]
+    index = faiss.IndexFlatIP(dimension)
+
+    # Populating vector space with all embeddings and save
+    print(f"Populating space and saving file")
+    index.add(embeddings)
+    faiss.write_index(index, str(INDEX_FILE))
     
-    print(f"done")
-
-# Download the LLM (it will happen automatically the first time you run it).
-
-# Process all 27,000+ movie descriptions into a high-dimensional vector space.
-
-# Save that space into a .index file.
-
 if __name__ == "__main__":
     generate_embeddings()
