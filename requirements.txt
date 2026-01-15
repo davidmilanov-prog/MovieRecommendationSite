@@ -1,0 +1,7 @@
+pandas 
+numpy<2 # scikit surprise was based on numpy 1.xx
+pyarrow 
+fastparquet
+sentence_transformers
+faiss-cpu
+scikit-surprise

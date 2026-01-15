@@ -1,5 +1,10 @@
 **/venv/
-**/*.csv
-**/*.parquet
 **/__pycache__/
 .DS_Store
+**/*.csv
+**/*.txt
+**/*.parquet
+**/*.pkl
+**/*.index
+backend/data/user_personas.json
+!requirements.txt

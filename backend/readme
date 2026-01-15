@@ -1,3 +1,0 @@
-Why sentence_transformers instead of other models? It is fine tuned specifically for semantic similarity. 
-
-Faiss is a high speed mathematical index which will be a great way to find the nearest neighbors of movies.
