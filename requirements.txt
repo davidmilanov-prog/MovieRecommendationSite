@@ -5,3 +5,5 @@ fastparquet
 sentence_transformers
 faiss-cpu
 scikit-surprise
+fastapi
+uvicorn

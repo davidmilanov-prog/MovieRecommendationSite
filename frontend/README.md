@@ -1,6 +1,20 @@
 ### Frontend Integration
-The backend is designed to support a specific frontend UI concept consisting of two main inputs:
+This frontend is a simple React UI that talks to the FastAPI backend.
 
-1. **The Search Bar:** Users can type natural language queries (e.g., "90s romcom," "mind-bending sci-fi," or "movies about fast cars").
-2. **The Archetype Dropdown:** Users can select a "Persona" to view the results through the lens of a different user.
-    * *Example:* If you search for "Alien," the **"Horror Enthusiast"** persona will rank *Alien (1979)* higher, while the **"Action Enthusiast"** persona might rank *Aliens (1986)* higher.
+The UI has two main inputs:
+
+1. **Mode Dropdown**
+- "Standard Search" (id 0) = semantic search only
+- Archetypes (ids 1000000+) = semantic search with prompt bias
+- Random User (a real MovieLens user) = hybrid semantic retrieval + CF re-rank
+
+2. **Search Bar**
+Users type natural language queries like:
+- "90s thriller with a twist"
+- "funny romcom"
+- "space sci-fi action"
+
+### Backend Endpoints Used
+- `GET /personas` to populate the dropdown
+- `GET /random_user` when clicking Random User
+- `POST /recommend` to fetch recommendations

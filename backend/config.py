@@ -14,7 +14,6 @@ TMDB_PATH = DATA_DIR / "TMDB_movie_dataset_v11.csv"
 INDEX_PATH = DATA_DIR / "movies.index"              
 MAPPING_PATH = DATA_DIR / "movie_ids.pkl"           
 MODEL_PATH = MODEL_DIR / "svd_model.pkl"
-PERSONAS_PATH = DATA_DIR / "user_personas.json"
 
 # hyperparameters
 MIN_VOTES = 50
@@ -25,3 +24,14 @@ N_FACTORS = 100
 N_EPOCHS = 30
 LR_ALL = 0.005
 REG_ALL = 0.02
+
+# archetypes for prompt engineering
+ARCHETYPES = {
+    "The Horror Fan": "Horror",
+    "The Sci-Fi Geek": "Sci-Fi",
+    "The Action Hero": "Action",
+    "The Hopeless Romantic": "Romance",
+    "The Comedy Club": "Comedy",
+    "The Drama Critic": "Drama",
+    "The 90s Kid": "Children's 90s"
+}

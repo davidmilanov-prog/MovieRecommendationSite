@@ -1,26 +1,45 @@
 ## Backend Recommendation Algorithm
 
 ### Summary
-This folder contains all logic for the recommendation system. We use a **hybrid approach**, combining Semantic Search (Content-Based) and Collaborative Filtering (SVD) to recommend movies.
+This folder contains all backend logic for the recommendation system. It is a **hybrid recommender**:
+1. Semantic Search (Sentence Transformers + FAISS) to retrieve candidates
+2. Collaborative Filtering (SVD) to re-rank for real users
 
-### How it works (The Pipeline)
-The `main.py` file runs the following 5 steps in order to build the engine:
+### What the API exposes
+The FastAPI server provides:
+- `/personas` (dropdown options)
+- `/random_user` (returns a valid userId from the CF trainset)
+- `/recommend` (main recommendation endpoint)
 
-**1. Data Preprocessing (`preprocess_data.py`)**
-We merge two datasets: **MovieLens** (which contains user ratings and tags) and **TMDB** (which contains movie posters and plot summaries). We filter out movies with low vote counts to ensure quality and clean up the text descriptions.
+### How it works (Pipeline)
+These are the artifacts the backend depends on:
 
-**2. Vector Indexing (`build_index.py`)**
-We use a Sentence Transformer (`multi-qa-mpnet-base-dot-v1`) to convert every movie's plot summary and genome tags into a vector. We then store these in a **FAISS Index**, which allows us to search through movies in quickly to find semantically similar ones.
+**1. Data Preprocessing (`data/preprocess_data.py`)**
+- Loads MovieLens movies + ratings
+- Filters to movies with enough votes and users with enough ratings
+- Adds genome tags and TMDB overview/poster
+- Writes:
+  - `backend/data/cleaned_movies.parquet`
+  - `backend/data/cleaned_ratings.parquet`
 
-**3. Model Training (`train_cf.py`)**
-We train a **Singular Value Decomposition (SVD)** model on user ratings. This model learns the patterns of user preferences. It predicts how a specific user would rate it based on their history.
+**2. Vector Indexing (`data/build_index.py`)**
+- Embeds each movie “soup” using `multi-qa-mpnet-base-dot-v1`
+- Builds a FAISS index for fast similarity search
+- Writes:
+  - `backend/data/movies.index`
+  - `backend/data/movie_ids.pkl`
 
-**4. Persona Generation (`generate_personas.py`)**
-The system mines the dataset to find users who represent specific "Archetypes." It identifies users who have excessively high ratings for specific genres. These are saved as JSON profiles to be used in the frontend.
+**3. Model Training (`models/train_cf.py`)**
+- Trains an SVD model on the cleaned ratings
+- Writes:
+  - `backend/models/svd_model.pkl`
 
-**5. Inference Engine (`inference/recommender.py`)**
-This is the system that combines everything. When a request comes in:
-* It converts the text query into a vector.
-* It retrieves the top 100 matches from the FAISS index.
-* It uses the SVD model to predict how the *current user* would rate those 100 movies.
-* It re-ranks the list and returns the best hybrid matches.
+**4. Inference Engine (`inference/recommender.py`)**
+When you call `/recommend`:
+- Encode the query text
+- Retrieve top ~100 from FAISS
+- Decide which strategy to use:
+  - `user_id == 0` -> semantic only
+  - `user_id >= 1000000` -> archetype prompt bias + semantic only
+  - real known user -> semantic retrieval + SVD re-rank (hybrid)
+  - unknown user -> popularity fallback within retrieved set

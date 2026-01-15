@@ -12,7 +12,6 @@ from config import (
     INDEX_PATH, 
     MAPPING_PATH, 
     MODEL_PATH, 
-    PERSONAS_PATH,
     MODEL_DIR
 )
 
@@ -21,38 +20,31 @@ def run_pipeline(force_rerun=False):
 
     # Check if we still need to clean the raw data
     if not CLEANED_DATA_PATH.exists() or not CLEANED_RATINGS_PATH.exists() or force_rerun:
-        print("\n[1/5] Cleaned data not found. Preprocessing now.")
+        print("\n[1/4] Cleaned data not found. Preprocessing now.")
         from data import preprocess_data
         preprocess_data.main()
     else:
-        print(f"\n[1/5] Found Cleaned Data. Skipping preprocessing.")
+        print(f"\n[1/4] Found Cleaned Data. Skipping preprocessing.")
 
     # Check if the vector index and ID mapping exist
     if not INDEX_PATH.exists() or not MAPPING_PATH.exists() or force_rerun:
-        print("\n[2/5] Index not found. Building FAISS Index.")
+        print("\n[2/4] Index not found. Building FAISS Index.")
         from data import build_index
         build_index.main()
     else:
-        print(f"\n[2/5] Found FAISS artifacts. Skipping index build.")
+        print(f"\n[2/4] Found FAISS artifacts. Skipping index build.")
 
     # Check if the collaborative filtering model exists
     if not MODEL_PATH.exists() or force_rerun:
-        print("\n[3/5] SVD Model not found. Training Model.")
+        print("\n[3/4] SVD Model not found. Training Model.")
         # Check if the directory exists first
         MODEL_DIR.mkdir(parents=True, exist_ok=True)
         from models import train_cf
         train_cf.train_model()
     else:
-        print(f"\n[3/5] Found {MODEL_PATH.name}. Skipping training.")
+        print(f"\n[3/4] Found {MODEL_PATH.name}. Skipping training.")
 
-    if not PERSONAS_PATH.exists() or force_rerun:
-        print("\n[4/5] Archetypes not found. Creating Now.")
-        from data import generate_personas
-        generate_personas.generate_personas()
-    else:
-        print(f"\n[4/5] Found {PERSONAS_PATH.name}. Skipping.")
-
-    print("\n[5/5] Loading Inference Engine.")
+    print("\n[4/4] Loading Inference Engine.")
     from inference.recommender import MovieRecommender
     
     # Initialize the singleton engine (loads all artifacts into memory)
@@ -92,7 +84,7 @@ def run_pipeline(force_rerun=False):
                 for r in results:
                     title = r['title'][:45] + "..." if len(r['title']) > 45 else r['title']
                     
-                    print(f"{r['movieId']:<7} | {r['predicted_rating']:<6} | {r['votes']:<6} | {r['match_score']:<10} | {title}")
+                    print(f"{r['movieId']:<7} | {r['score']:<6} | {r['votes']:<6} | {r['match_score']:<10} | {title}")
                 
                 print(separator)
             else:

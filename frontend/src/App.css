@@ -1,0 +1,143 @@
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: #111318;
+  color: #eaeaea;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+.App-header {
+  padding: 16px;
+  border-bottom: 1px solid #2a2d36;
+}
+
+.App-header h1 { margin: 0; font-size: 20px; }
+
+.container {
+  max-width: 900px;
+  margin: 20px auto;
+  padding: 0 16px;
+}
+
+.controls,
+.persona-info,
+.movie-card {
+  border: 1px solid #2a2d36;
+  background: #161922;
+  padding: 12px;
+  margin-bottom: 12px;
+}
+
+.input-group { margin-bottom: 12px; }
+
+label {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 13px;
+  color: #bdbdbd;
+}
+
+select,
+input[type="text"],
+button {
+  width: 100%;
+  padding: 10px;
+  background: #111318;
+  color: #eaeaea;
+  border: 1px solid #2a2d36;
+  border-radius: 6px;
+  font-size: 14px;
+}
+
+button {
+  background: #1f2430;
+  cursor: pointer;
+}
+
+button:disabled { opacity: 0.6; cursor: not-allowed; }
+
+.persona-row,
+.search-row {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.persona-select,
+.search-input { flex: 7; }
+
+.persona-random-btn,
+.search-button { flex: 3; }
+
+.persona-info { font-size: 13px; color: #cfcfcf; }
+.persona-label { font-weight: 600; margin-right: 8px; color: #9aa3b2; }
+
+.error { color: #ff6b6b; margin: 12px 0; }
+
+.movie-card {
+  display: flex;
+  gap: 12px;
+}
+
+.poster-wrapper { width: 92px; flex-shrink: 0; }
+
+.poster-img {
+  width: 100%;
+  border: 1px solid #2a2d36;
+}
+
+.no-poster {
+  width: 92px;
+  height: 138px;
+  border: 1px dashed #2a2d36;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  color: #9aa3b2;
+}
+
+.movie-header {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.movie-header h3 { margin: 0; font-size: 16px; }
+
+.badge {
+  font-size: 11px;
+  color: #bdbdbd;
+  border: 1px solid #2a2d36;
+  padding: 3px 6px;
+}
+
+.overview {
+  margin-top: 6px;
+  font-size: 13px;
+  line-height: 1.4;
+  color: #c8c8c8;
+}
+
+.meta {
+  margin-top: 8px;
+  font-size: 12px;
+  color: #9aa3b2;
+  display: flex;
+  gap: 12px;
+}
+
+a { color: #cfcfcf; }
+a:hover { color: #ffffff; }
+
+@media (max-width: 520px) {
+  .persona-row,
+  .search-row {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .movie-card { flex-direction: column; }
+  .poster-wrapper { width: 120px; }
+  .no-poster { width: 120px; height: 180px; }
+}
