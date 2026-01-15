@@ -53,6 +53,21 @@ This repo includes:
 - **Cold Start**
   - Automatic fallback for unknown users. Movies are ranked by popularity (vote count) within the semantically retrieved set.
 
+## Hybrid Mode Example
+![Hybrid recommendations example](images/hybrid.png)
+Combines semantic similarity with user-based collaborative filtering
+to re-rank results for real users.
+
+## Semantic Search Example
+![Semantic search example](images/semantic.png)
+Uses dense embeddings and FAISS for meaning-based retrieval
+without popularity or user bias.
+
+## Archetype Mode Example
+![Archetype-based recommendations example](images/archetype.png)
+Applies a genre/personality prior to bias recommendations
+towards a defined taste profile.
+
 ### Data you must download
 Datasets are third-party and not included in this repo. Download separately and respect their licenses.
 
