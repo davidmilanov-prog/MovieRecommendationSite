@@ -41,31 +41,34 @@ This repo includes:
 
 ### Modes supported
 
-- Standard Search (id 0)
-* Pure semantic search. Movies are retrieved based on how similar their embeddings are to the natural-language query. No user data is used.
-- Archetypes (ids 1000000+)
-* Semantic search with a light prompt bias toward a specific genre. Internally, a genre keyword is appended to the query to steer retrieval without hard filtering.
-- Real User (MovieLens userId)
-* Hybrid recommendation. The system retrieves semantically relevant movies, then re-ranks them using collaborative filtering based on a real MovieLens user’s rating history. This simulates personalized recommendations.
-- Cold Start
-* Automatic fallback for unknown users. Movies are ranked by popularity (vote count) within the semantically retrieved set.
+- **Standard Search (id 0)**
+  - Pure semantic search. Movies are retrieved based on how similar their embeddings are to the natural-language query. No user data is used.
+
+- **Archetypes (ids 1000000+)**
+  - Semantic search with a light prompt bias toward a specific genre. Internally, a genre keyword is appended to the query to steer retrieval without hard filtering.
+
+- **Real User (MovieLens userId)**
+  - Hybrid recommendation. The system retrieves semantically relevant movies, then re-ranks them using collaborative filtering based on a real MovieLens user’s rating history. This simulates personalized recommendations.
+
+- **Cold Start**
+  - Automatic fallback for unknown users. Movies are ranked by popularity (vote count) within the semantically retrieved set.
 
 ### Data you must download
 Datasets are third-party and not included in this repo. Download separately and respect their licenses.
 
-1. MovieLens (ml-latest)
-* https://www.kaggle.com/datasets/rounakbanik/the-movies-dataset
-Required files (put inside `backend/data/ml-latest/`):
-- movies.csv
-- ratings.csv
-- genome-scores.csv
-- genome-tags.csv
-- links.csv
+1. **MovieLens (ml-latest)**
+   - https://www.kaggle.com/datasets/rounakbanik/the-movies-dataset
+   - Required files (put inside `backend/data/ml-latest/`):
+     - movies.csv
+     - ratings.csv
+     - genome-scores.csv
+     - genome-tags.csv
+     - links.csv
 
-2. TMDB dataset
-* https://www.kaggle.com/datasets/asaniczka/tmdb-movies-dataset-2023-930k-movies
-Required file (put inside `backend/data/`):
-- TMDB_movie_dataset_v11.csv
+2. **TMDB dataset**
+   - https://www.kaggle.com/datasets/asaniczka/tmdb-movies-dataset-2023-930k-movies
+   - Required file (put inside `backend/data/`):
+     - TMDB_movie_dataset_v11.csv
 
 ### Folder setup (important)
 The paths are hardcoded in `backend/config.py` to expect:
