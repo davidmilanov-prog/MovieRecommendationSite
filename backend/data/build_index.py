@@ -29,13 +29,12 @@ def main():
 
     # generate embeddings
     print("Generating Embeddings")
-    # we use multi-qa-mpnet-base-dot-v1 because it is optimized for semantic matching and handles asymmetric query/doc lengths well
+    # we use multi-qa-mpnet-base-dot-v1 because it is optimized for semantic matching and handles asymmetric query lengths well
     model = SentenceTransformer('multi-qa-mpnet-base-dot-v1')
     # normalize_embeddings=True ensures that dot product equals cosine similarity
     embeddings = model.encode(movies_soup, 
     show_progress_bar=True, normalize_embeddings=True)
 
-    # build FAISS index
     print("Building FAISS Index...")
     # get the dimension size of the vectors (768)
     d = embeddings.shape[1] 
