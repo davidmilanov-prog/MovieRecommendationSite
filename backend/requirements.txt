@@ -1,0 +1,10 @@
+numpy<2
+pandas
+pyarrow
+fastparquet
+sentence-transformers
+faiss-cpu
+scikit-surprise
+fastapi
+uvicorn[standard]
+pydantic
